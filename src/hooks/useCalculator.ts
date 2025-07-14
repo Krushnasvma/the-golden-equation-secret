@@ -94,19 +94,32 @@ export const useCalculator = () => {
       const newTriggerSequence = prev.triggerSequence + operator;
       
       if (prev.operation && !prev.waitingForNumber) {
-        // Perform calculation
-        const result = calculate(prev.previousValue, prev.display, prev.operation);
-        const newExpression = prev.expression + operator;
-        
-        return {
-          ...prev,
-          display: result.toString(),
-          expression: newExpression,
-          previousValue: result.toString(),
-          operation: operator,
-          waitingForNumber: true,
-          triggerSequence: newTriggerSequence
-        };
+        try {
+          const result = calculate(prev.previousValue, prev.display, prev.operation);
+          const newExpression = prev.expression + operator;
+          
+          return {
+            ...prev,
+            display: result.toString(),
+            expression: newExpression,
+            previousValue: result.toString(),
+            operation: operator,
+            waitingForNumber: true,
+            triggerSequence: newTriggerSequence
+          };
+        } catch (error) {
+          // Handle division by zero or other calculation errors
+          return {
+            ...prev,
+            display: 'Error',
+            expression: '',
+            operation: '',
+            previousValue: '',
+            waitingForNumber: false,
+            isError: true,
+            triggerSequence: ''
+          };
+        }
       } else {
         const newExpression = prev.expression + operator;
         return {
@@ -128,20 +141,50 @@ export const useCalculator = () => {
       const newTriggerSequence = prev.triggerSequence + '=';
       
       if (prev.operation && prev.previousValue) {
-        const result = calculate(prev.previousValue, prev.display, prev.operation);
-        
-        // Check trigger sequence after calculation
-        setTimeout(() => checkTriggerSequence(newTriggerSequence), 0);
-        
-        return {
-          ...prev,
-          display: result.toString(),
-          expression: prev.expression + '=' + result.toString(),
-          operation: '',
-          previousValue: '',
-          waitingForNumber: false,
-          triggerSequence: newTriggerSequence
-        };
+        try {
+          const result = calculate(prev.previousValue, prev.display, prev.operation);
+          
+          // Check trigger sequence after calculation
+          setTimeout(() => checkTriggerSequence(newTriggerSequence), 0);
+          
+          return {
+            ...prev,
+            display: result.toString(),
+            expression: prev.expression + '=' + result.toString(),
+            operation: '',
+            previousValue: '',
+            waitingForNumber: false,
+            triggerSequence: newTriggerSequence
+          };
+        } catch (error) {
+          // For division by zero in the trigger sequence, we need special handling
+          if (newTriggerSequence === '0÷0=') {
+            // Check trigger sequence even when calculation fails
+            setTimeout(() => checkTriggerSequence(newTriggerSequence), 0);
+            
+            return {
+              ...prev,
+              display: 'Error',
+              expression: prev.expression + '=Error',
+              operation: '',
+              previousValue: '',
+              waitingForNumber: false,
+              triggerSequence: newTriggerSequence
+            };
+          }
+          
+          // Handle other calculation errors
+          return {
+            ...prev,
+            display: 'Error',
+            expression: '',
+            operation: '',
+            previousValue: '',
+            waitingForNumber: false,
+            isError: true,
+            triggerSequence: ''
+          };
+        }
       }
       
       return {
