@@ -61,6 +61,18 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				calc: {
+					button: 'hsl(var(--calc-button-bg))',
+					'button-hover': 'hsl(var(--calc-button-hover))',
+					'button-active': 'hsl(var(--calc-button-active))',
+					operator: 'hsl(var(--calc-operator-bg))',
+					'operator-hover': 'hsl(var(--calc-operator-hover))',
+					gold: 'hsl(var(--calc-gold-bg))',
+					'gold-hover': 'hsl(var(--calc-gold-hover))',
+					'gold-active': 'hsl(var(--calc-gold-active))',
+					display: 'hsl(var(--calc-display-bg))',
+					'display-border': 'hsl(var(--calc-display-border))'
 				}
 			},
 			borderRadius: {
