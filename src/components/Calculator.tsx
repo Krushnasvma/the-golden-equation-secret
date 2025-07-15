@@ -192,10 +192,12 @@ export const Calculator = () => {
         </div>
       </div>
       
-      {/* Calculator Watermark */}
-      <div className="calc-watermark">
-        @developed by Krushna Soni
-      </div>
+      {/* Calculator Watermark - Only show when not hidden */}
+      {!isHidden && (
+        <div className="calc-watermark">
+          @developed by Krushna Soni
+        </div>
+      )}
     </div>
   );
 };
