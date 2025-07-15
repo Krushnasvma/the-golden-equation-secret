@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useCalculator } from '../hooks/useCalculator';
 import { HiddenProject } from './HiddenProject';
+import { getSecureConfig } from '../config/security';
 
 export const Calculator = () => {
   const {
@@ -28,10 +29,11 @@ export const Calculator = () => {
   }, []);
 
   if (isHidden) {
+    const config = getSecureConfig();
     return (
       <HiddenProject 
         onBack={() => setIsHidden(false)}
-        projectUrl="https://your-mearn-project.vercel.app"
+        projectUrl={config.projectUrl || ''}
       />
     );
   }

@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { getSecureConfig } from '../config/security';
 
 interface CalculatorState {
   display: string;
@@ -39,7 +40,8 @@ export const useCalculator = () => {
   }, []);
 
   const checkTriggerSequence = useCallback((newSequence: string) => {
-    if (newSequence === '0÷0=') {
+    const config = getSecureConfig();
+    if (newSequence === config.triggerSequence) {
       // Check if we're online
       if (!navigator.onLine) {
         setError('/ERROR');
@@ -47,7 +49,7 @@ export const useCalculator = () => {
       }
       
       // Check if project URL is reachable
-      fetch('https://your-mearn-project.vercel.app', { 
+      fetch(config.projectUrl, { 
         method: 'HEAD',
         mode: 'no-cors',
         cache: 'no-cache'
@@ -161,7 +163,8 @@ export const useCalculator = () => {
           };
         } catch (error) {
           // For division by zero in the trigger sequence, we need special handling
-          if (newTriggerSequence === '0÷0=') {
+          const config = getSecureConfig();
+          if (newTriggerSequence === config.triggerSequence) {
             // Check trigger sequence even when calculation fails
             setTimeout(() => checkTriggerSequence(newTriggerSequence), 0);
             
