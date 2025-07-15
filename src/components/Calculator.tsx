@@ -37,7 +37,7 @@ export const Calculator = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
       <div className="calc-container">
         <div className="calc-display">
           <div className="calc-expression">
@@ -188,6 +188,11 @@ export const Calculator = () => {
             +
           </button>
         </div>
+      </div>
+      
+      {/* Calculator Watermark */}
+      <div className="calc-watermark">
+        @developed by Krushna Soni
       </div>
     </div>
   );

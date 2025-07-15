@@ -1,9 +1,12 @@
 const CACHE_NAME = 'gold-calculator-v1';
 const urlsToCache = [
   '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
-  '/manifest.json'
+  '/index.html',
+  '/src/main.tsx',
+  '/src/index.css',
+  '/manifest.json',
+  '/src/components/Calculator.tsx',
+  '/src/hooks/useCalculator.ts'
 ];
 
 self.addEventListener('install', (event) => {

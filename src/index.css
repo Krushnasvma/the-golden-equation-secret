@@ -234,6 +234,11 @@
     @apply fixed top-4 right-4 text-xs opacity-50;
     color: hsl(var(--muted-foreground));
   }
+  
+  .calc-watermark {
+    @apply mt-4 text-xs opacity-50 text-center;
+    color: hsl(var(--muted-foreground));
+  }
 }
 
 @keyframes buttonPress {

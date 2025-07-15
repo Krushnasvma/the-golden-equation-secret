@@ -46,17 +46,20 @@ export const useCalculator = () => {
         return;
       }
       
-      // Simulate connection check to main project
-      const isProjectReachable = true; // In real implementation, this would be an actual check
-      
-      if (!isProjectReachable) {
+      // Check if project URL is reachable
+      fetch('https://your-mearn-project.vercel.app', { 
+        method: 'HEAD',
+        mode: 'no-cors',
+        cache: 'no-cache'
+      })
+      .then(() => {
+        setState(prev => ({ ...prev, isHidden: true }));
+      })
+      .catch(() => {
         setError('ERROR//');
-        return;
-      }
-      
-      setState(prev => ({ ...prev, isHidden: true }));
+      });
     }
-  }, []);
+  }, [setError]);
 
   const handleNumberClick = useCallback((number: string) => {
     setState(prev => {

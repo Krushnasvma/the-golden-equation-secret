@@ -54,35 +54,26 @@ export const HiddenProject = ({ onBack, projectUrl }: HiddenProjectProps) => {
   };
 
   if (error) {
-    return (
-      <div className="hidden-portal">
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="text-6xl mb-4 text-destructive">⚠️</div>
-            <div className="text-xl mb-4">Connection Error</div>
-            <div className="text-muted-foreground mb-8">{error}</div>
-            <button
-              onClick={handleBack}
-              className="calc-button px-6 py-2 text-sm"
-            >
-              Return to Calculator
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+    // Don't render error page - errors should be shown on calculator display
+    handleBack();
+    return null;
   }
 
   return (
     <div className="hidden-portal">
-      {/* Back Button */}
-      <button
-        onClick={handleBack}
-        className="fixed top-4 left-4 z-50 calc-button p-3 rounded-full"
-        title="Back to Calculator"
-      >
-        <ArrowLeft size={20} />
-      </button>
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+        <div className="flex items-center justify-between p-4">
+          <button
+            onClick={handleBack}
+            className="calc-button p-2 rounded-full"
+            title="Back to Calculator"
+          >
+            <ArrowLeft size={20} />
+          </button>
+          <div className="text-sm text-muted-foreground">Secure Project</div>
+        </div>
+      </nav>
 
       {/* Developer Watermark */}
       <div className="watermark">
@@ -91,7 +82,7 @@ export const HiddenProject = ({ onBack, projectUrl }: HiddenProjectProps) => {
 
       {/* Loading State */}
       {isLoading && (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-screen pt-16">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-2 border-primary border-t-transparent mx-auto mb-4"></div>
             <div className="text-lg">Loading secure project...</div>
@@ -103,7 +94,8 @@ export const HiddenProject = ({ onBack, projectUrl }: HiddenProjectProps) => {
       {!isLoading && !error && (
         <iframe
           src={projectUrl}
-          className="w-full h-screen border-0"
+          className="w-full h-screen border-0 pt-16"
+          style={{ height: 'calc(100vh - 4rem)' }}
           title="Hidden Project"
           sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads"
           loading="lazy"
