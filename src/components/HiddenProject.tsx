@@ -11,7 +11,7 @@ export const HiddenProject = ({ onBack, projectUrl }: HiddenProjectProps) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Simulate loading and connection check
+    // Check connection and handle errors
     const timer = setTimeout(() => {
       if (!navigator.onLine) {
         setError('No internet connection');
@@ -95,11 +95,30 @@ export const HiddenProject = ({ onBack, projectUrl }: HiddenProjectProps) => {
         <iframe
           src={projectUrl}
           className="w-full h-screen border-0 pt-16"
-          style={{ height: 'calc(100vh - 4rem)' }}
+          style={{ 
+            height: 'calc(100vh - 4rem)',
+            background: 'transparent'
+          }}
           title="Hidden Project"
           sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads"
           loading="lazy"
-          onLoad={() => setIsLoading(false)}
+          onLoad={(e) => {
+            const iframe = e.currentTarget;
+            try {
+              // Check if iframe loaded successfully by checking its content
+              const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+              if (iframeDoc?.title.includes('404') || 
+                  iframeDoc?.title.includes('Not Found') ||
+                  iframeDoc?.body?.innerText?.includes('deployment cannot be found') ||
+                  iframeDoc?.body?.innerText?.includes('404')) {
+                setError('Project not found');
+                return;
+              }
+            } catch (e) {
+              // Cross-origin iframe - assume it loaded if no error
+            }
+            setIsLoading(false);
+          }}
           onError={() => setError('Failed to load project')}
         />
       )}
