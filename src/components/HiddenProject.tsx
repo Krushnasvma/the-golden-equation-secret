@@ -207,7 +207,7 @@ export const HiddenProject = ({ onBack, projectUrl }: HiddenProjectProps) => {
             display: 'block'
           }}
           title="Secure Content"
-          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads allow-top-navigation-by-user-activation"
+          sandbox="allow-scripts allow-forms allow-popups allow-downloads allow-top-navigation-by-user-activation"
           loading="lazy"
           onLoad={() => {
             setIsLoading(false);
