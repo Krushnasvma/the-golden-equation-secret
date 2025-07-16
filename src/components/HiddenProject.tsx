@@ -199,12 +199,11 @@ export const HiddenProject = ({ onBack, projectUrl }: HiddenProjectProps) => {
       {!isLoading && !error && proxyUrl && (
         <iframe
           src={proxyUrl}
-          className="w-full border-0"
+          className="w-full h-full border-0 absolute top-10 left-0"
           style={{ 
+            width: '100vw',
             height: 'calc(100vh - 2.5rem)',
-            marginTop: '2.5rem',
-            background: 'transparent',
-            display: 'block'
+            background: 'transparent'
           }}
           title="Secure Content"
           sandbox="allow-scripts allow-forms allow-popups allow-downloads allow-top-navigation-by-user-activation"
