@@ -1,5 +1,5 @@
 // Obfuscated configuration - DO NOT MODIFY
-const _0x1a2b = ['aHR0cHM6Ly95b3VyLW1lYXJuLXByb2plY3QudmVyY2VsLmFwcA==', 'MDDltzAw8J='];
+const _0x1a2b = ['aHR0cHM6Ly95b3VyLW1lYXJuLXByb2plY3QudmVyY2VsLmFwcA==', 'MDA='];
 const _0x3c4d = (str: string) => atob(str);
 const _0x5e6f = () => _0x3c4d(_0x1a2b[0]);
 const _0x7g8h = () => _0x3c4d(_0x1a2b[1]);
